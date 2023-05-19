@@ -15,8 +15,6 @@ const Content = () => {
   const { messages, handleSetMessages, statusSuccess, statusError } =
     useNotification();
 
-  const messagesData = messages.length && messages.reverse();
-
   const onSubmit = (dataForm) => {
     const message = dataForm.message;
     const messageID = Date.parse(new Date()) / 1000 + message.length;
