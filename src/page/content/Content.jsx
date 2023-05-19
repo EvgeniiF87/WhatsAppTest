@@ -15,6 +15,8 @@ const Content = () => {
   const { messages, handleSetMessages, statusSuccess, statusError } =
     useNotification();
 
+  const messagesData = messages.length && messages.reverse();
+
   const onSubmit = (dataForm) => {
     const message = dataForm.message;
     const messageID = Date.parse(new Date()) / 1000 + message.length;
@@ -57,11 +59,9 @@ const Content = () => {
       <div className={style.body}>
         <div className={style.body_content}>
           {messages.length &&
-            messages
-              .map((message) => (
-                <MessageItem key={message.id} message={message} />
-              ))
-              .reverse()}
+            messagesData.map((message) => (
+              <MessageItem key={message.id} message={message} />
+            ))}
         </div>
       </div>
       <div className={style.footer}>
