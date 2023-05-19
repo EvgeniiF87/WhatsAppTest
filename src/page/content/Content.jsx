@@ -59,9 +59,11 @@ const Content = () => {
       <div className={style.body}>
         <div className={style.body_content}>
           {messages.length &&
-            messages.map((message) => (
-              <MessageItem key={message.id} message={message} />
-            ))}
+            messages
+              .map((message) => (
+                <MessageItem key={message.id} message={message} />
+              ))
+              .reverse()}
         </div>
       </div>
       <div className={style.footer}>
