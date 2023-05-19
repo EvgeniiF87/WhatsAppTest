@@ -1,0 +1,117 @@
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+
+  .left_bar {
+    width: 30%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f2f5;
+    border-right: 0.4px solid #d8dcdf;
+
+    .info_block {
+      width: 100%;
+      height: 10%;
+      padding: 20px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #54656f;
+
+      & div {
+        margin: 0;
+        font-size: 20px;
+
+        & > span {
+          opacity: 0.8;
+
+          &::before {
+            content: '"';
+          }
+
+          &::after {
+            content: '"';
+          }
+        }
+      }
+
+      & button {
+        padding: 8px 20px;
+        color: #54656f;
+        background-color: inherit;
+        border: 0.4px solid #54656f;
+        font-size: 16px;
+        border-radius: 4px;
+        opacity: 0.8;
+        transition: opacity 0.4s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          opacity: 1;
+        }
+      }
+    }
+
+    .add_phone_block {
+      width: 100%;
+      padding: 20px;
+      background-color: #fff;
+      border-bottom: 0.4px solid #d8dcdf;
+
+      & form {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        & input {
+          width: 70%;
+          padding: 10px;
+          background-color: #f0f2f5;
+          border: none;
+          border-radius: 6px;
+          color: #667781;
+          font-size: 16px;
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        & button {
+          width: 20%;
+          margin-left: 20px;
+          padding: 10px 0;
+          color: #54656f;
+          background-color: inherit;
+          border: 0.4px solid #54656f;
+          border-radius: 6px;
+        }
+      }
+    }
+
+    .contacts_bloc {
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      overflow: scroll;
+
+      .empty {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #54656f;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .content {
+    width: 70%;
+    height: 100vh;
+  }
+}
