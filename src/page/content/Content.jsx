@@ -59,7 +59,7 @@ const Content = () => {
       <div className={style.body}>
         <div className={style.body_content}>
           {messages.length &&
-            messagesData.map((message) => (
+            messages.map((message) => (
               <MessageItem key={message.id} message={message} />
             ))}
         </div>
