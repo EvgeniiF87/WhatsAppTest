@@ -14,7 +14,7 @@ const deleteNotification = (receiptId, idInstance, apiTokenInstance) => {
     .catch((err) => console.log(err));
 };
 
-const useNotification = () => {
+const useNotification = (queryInterval = 1000) => {
   const { idInstance, apiTokenInstance } = useAppContext();
   const [messages, setMessages] = useState([]);
 
@@ -44,7 +44,8 @@ const useNotification = () => {
             if (
               // eslint-disable-next-line no-prototype-builtins
               data.hasOwnProperty("body") &&
-              data.body.typeWebhook === "incomingMessageReceived"
+              data.body.typeWebhook === "incomingMessageReceived" &&
+              data.body.messageData.typeMessage === "textMessage"
             ) {
               const dataMessage = {
                 im: false,
@@ -52,19 +53,45 @@ const useNotification = () => {
               };
               setMessages([...messages, dataMessage]);
               deleteNotification(data.receiptId, idInstance, apiTokenInstance);
+            } else {
+              deleteNotification(data.receiptId, idInstance, apiTokenInstance);
             }
+          } else {
+            return null;
           }
         });
-    }, 1000);
+    }, queryInterval);
 
     return () => clearInterval(interval);
-  }, [apiTokenInstance, idInstance, messages]);
+  }, [apiTokenInstance, idInstance, messages, queryInterval]);
 
   const handleSetMessages = (objData) => {
     setMessages([...messages, objData]);
   };
 
-  return { messages, setMessages, handleSetMessages };
+  const statusSuccess = (messageID) => {
+    setMessages((prevState) =>
+      prevState
+        .map((m) => (m.id === messageID ? { ...m, success: true } : m))
+        .reverse()
+    );
+  };
+
+  const statusError = (messageID) => {
+    setMessages((prevState) =>
+      prevState
+        .map((m) => (m.id === messageID ? { ...m, error: true } : m))
+        .reverse()
+    );
+  };
+
+  return {
+    messages,
+    setMessages,
+    handleSetMessages,
+    statusSuccess,
+    statusError,
+  };
 };
 
 export default useNotification;

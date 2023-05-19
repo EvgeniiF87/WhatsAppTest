@@ -29,6 +29,17 @@
   display: flex;
   border-radius: 3px;
   color: black;
-  background-color: #d9fdd2;
   border-bottom: 1px solid #d1cfc8;
+}
+
+.wait {
+  background-color: #eaf7e7;
+}
+
+.success {
+  background-color: #cbfcc1;
+}
+
+.error {
+  background-color: #f96363;
 }

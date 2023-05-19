@@ -2,27 +2,35 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { formatPhone } from "../../lib/formatPhone";
-import style from "./content.module.scss";
 import useAppContext from "../../hooks/useAppContext";
 import useNotification from "../../hooks/useNotification";
 import MessageItem from "../../components/message-item/MessageItem";
 import { useRef } from "react";
+import style from "./content.module.scss";
 
 const Content = () => {
   const { idInstance, apiTokenInstance } = useAppContext();
   const { phone } = useParams();
   const { register, reset, handleSubmit } = useForm();
-
-  const { messages, handleSetMessages } = useNotification();
+  const { messages, handleSetMessages, statusSuccess, statusError } =
+    useNotification();
 
   const messagesData = messages.length && messages.reverse();
 
   const onSubmit = (dataForm) => {
     const message = dataForm.message;
+    const messageID = Date.parse(new Date()) / 1000 + message.length;
+
     const dataMessage = {
+      id: messageID,
       im: true,
       textMessage: message,
+      success: false,
+      error: false,
     };
+
+    handleSetMessages(dataMessage);
+    reset();
 
     const apiUrl = `https://api.green-api.com/waInstance${idInstance}/sendMessage/${apiTokenInstance}`;
 
@@ -33,11 +41,13 @@ const Content = () => {
       })
       .then(({ data }) => {
         if (data.idMessage) {
-          handleSetMessages(dataMessage);
-          reset();
+          statusSuccess(messageID);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        statusError(messageID);
+      });
   };
 
   return (
@@ -50,7 +60,7 @@ const Content = () => {
         <div className={style.body_content}>
           {messages.length &&
             messagesData.map((message) => (
-              <MessageItem key={message.textMessage} message={message} />
+              <MessageItem key={message.id} message={message} />
             ))}
         </div>
       </div>
