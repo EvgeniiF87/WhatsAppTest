@@ -71,13 +71,17 @@ const useNotification = (queryInterval = 1000) => {
 
   const statusSuccess = (messageID) => {
     setMessages((prevState) =>
-      prevState.map((m) => (m.id === messageID ? { ...m, success: true } : m))
+      prevState
+        .map((m) => (m.id === messageID ? { ...m, success: true } : m))
+        .reverse()
     );
   };
 
   const statusError = (messageID) => {
     setMessages((prevState) =>
-      prevState.map((m) => (m.id === messageID ? { ...m, error: true } : m))
+      prevState
+        .map((m) => (m.id === messageID ? { ...m, error: true } : m))
+        .reverse()
     );
   };
 
